@@ -137,32 +137,32 @@ sudo systemctl status nfs-kernel-server
 
 ### 2 Проверка работы NFS:
 
-После установки NFS:
+- После установки NFS:
 
 ```bash
 sudo systemctl status nfs-kernel-server
 ```
 
-После установки NFS-provisioner:
+- После установки NFS-provisioner:
 ```bash
 kubectl get sc
 ```
-После создания PVC:
+- После создания PVC:
 ```bash
 kubectl get pvc
 ```
-После создания пода:
+- После создания пода:
 ```bash
 kubectl get pods -l app=multitool-nfs
 ```
 
-После проверки работы:
+- После проверки работы:
 ```bash
 kubectl exec -it $POD_NAME -- cat /data/test.txt
 sudo cat /srv/nfs/kubedata/test.txt
 ```
 
-![image]((https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/2-2.png)
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/2-2.png)
 
 
 ### Результаты
