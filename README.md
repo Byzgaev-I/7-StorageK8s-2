@@ -20,12 +20,12 @@ sudo chmod 777 /mnt/data
 ```
 ### Манифесты
 
-Все манифесты находятся в директории manifests/task1:
+Все манифесты находятся в директории [manifests/task1](https://github.com/Byzgaev-I/7-StorageK8s-2/tree/main/manifests/task1)
 
-StorageClass (storage-class.yaml)  
-PersistentVolume (pv.yaml)  
-PersistentVolumeClaim (pvc.yaml)  
-Deployment (deployment.yaml)  
+StorageClass [storage-class.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task1/storage-class.yaml)  
+PersistentVolume [pv.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task1/pv.yaml)
+PersistentVolumeClaim [pvc.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task1/pvc.yaml) 
+Deployment [deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task1/deployment.yaml)
 
 Проверка работоспособности
 
