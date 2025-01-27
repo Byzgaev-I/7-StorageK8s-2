@@ -22,10 +22,10 @@ sudo chmod 777 /mnt/data
 
 Все манифесты находятся в директории manifests/task1:
 
-StorageClass (storage-class.yaml)
-PersistentVolume (pv.yaml)
-PersistentVolumeClaim (pvc.yaml)
-Deployment (deployment.yaml)
+StorageClass (storage-class.yaml)  
+PersistentVolume (pv.yaml)  
+PersistentVolumeClaim (pvc.yaml)  
+Deployment (deployment.yaml)  
 
 Проверка работоспособности
 
@@ -75,6 +75,10 @@ sudo cat /mnt/data/output.txt
 ## Задание 2: Создание Deployment с NFS
 
 ### Подготовка окружения
+
+Все манифесты находятся в директории manifests/task2:
+
+
 
 ### 1 Установка и настройка NFS:
 
