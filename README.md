@@ -78,7 +78,7 @@ sudo cat /mnt/data/output.txt
 
 Все манифесты находятся в директории manifests/task2:
 
-[nfs-deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-deployment.yaml)
+[nfs-deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-deployment.yaml)  
 [nfs-pvc.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-pvc.yaml)
 
 
