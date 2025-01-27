@@ -71,7 +71,8 @@ kubectl get pv
 sudo cat /mnt/data/output.txt
 ```
 
-Задание 2: Создание Deployment с NFS
+## Задание 2: Создание Deployment с NFS
+
 Подготовка окружения
 
 1 Установка и настройка NFS:
