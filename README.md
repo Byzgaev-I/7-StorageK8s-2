@@ -18,7 +18,8 @@
 sudo mkdir /mnt/data
 sudo chmod 777 /mnt/data
 ```
-Манифесты
+### Манифесты
+
 Все манифесты находятся в директории manifests/task1:
 
 StorageClass (storage-class.yaml)
@@ -28,7 +29,7 @@ Deployment (deployment.yaml)
 
 Проверка работоспособности
 
-1 Создание и проверка StorageClass и PV:
+### 1 Создание и проверка StorageClass и PV:
 
 ```bash
 kubectl apply -f manifests/task1/storage-class.yaml
@@ -37,35 +38,35 @@ kubectl get sc,pv
 ```
 foto
 
-2 Создание PVC и проверка:
+### 2 Создание PVC и проверка:
 
 ```bash
 kubectl apply -f manifests/task1/pvc.yaml
 kubectl get pvc
 ```
 foto
-3 Запуск Deployment и проверка подов:
+### 3 Запуск Deployment и проверка подов:
 
 ```bash
 kubectl apply -f manifests/task1/deployment.yaml
 kubectl get pods -l app=storage-test
 ```
-4 Проверка записи данных:
+### 4 Проверка записи данных:
 ```bash
 POD_NAME=$(kubectl get pods -l app=storage-test -o jsonpath="{.items[0].metadata.name}")
 kubectl exec -it $POD_NAME -c multitool -- cat /data/output.txt
 ```
 
 
-Проверка сохранности данных
+### Проверка сохранности данных
 
-1 Удаление Deployment и PVC:
+### 1 Удаление Deployment и PVC:
 ```
 kubectl delete -f manifests/task1/deployment.yaml
 kubectl delete -f manifests/task1/pvc.yaml
 kubectl get pv
 ```
-2 Проверка данных на ноде:
+### 2 Проверка данных на ноде:
 
 ```bash
 sudo cat /mnt/data/output.txt
@@ -73,9 +74,9 @@ sudo cat /mnt/data/output.txt
 
 ## Задание 2: Создание Deployment с NFS
 
-Подготовка окружения
+### Подготовка окружения
 
-1 Установка и настройка NFS:
+### 1 Установка и настройка NFS:
 
 ```bash
 sudo apt install -y nfs-kernel-server
@@ -84,22 +85,22 @@ sudo chown -R nobody:nogroup /srv/nfs/kubedata
 sudo chmod 777 /srv/nfs/kubedata
 ```
 
-2 Настройка NFS-сервера:
+### 2 Настройка NFS-сервера:
 
 ```bash
 echo "/srv/nfs/kubedata *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
 sudo exportfs -ra
 ```
 
-Проверка работоспособности
+### Проверка работоспособности
 
-1 Статус NFS-сервера:
+### 1 Статус NFS-сервера:
 
 ```bash 
 sudo systemctl status nfs-kernel-server
 ```
 
-2 Проверка работы NFS:
+### 2 Проверка работы NFS:
 
 ```bash
 kubectl exec -it $POD_NAME -- sh -c "echo 'Test NFS Storage' > /data/test.txt"
