@@ -33,9 +33,9 @@ Deployment [deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/ma
 ```bash
 kubectl apply -f manifests/task1/storage-class.yaml
 kubectl apply -f manifests/task1/pv.yaml
-kubectl get sc,pv
+kubectl get pv
 ```
-foto
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-1images%3A1-pv-status.png)
 
 ### 2 Создание PVC и проверка:
 
@@ -43,19 +43,28 @@ foto
 kubectl apply -f manifests/task1/pvc.yaml
 kubectl get pvc
 ```
-foto
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-2%20статус%20PVC.png)  
+
 ### 3 Запуск Deployment и проверка подов:
 
 ```bash
 kubectl apply -f manifests/task1/deployment.yaml
 kubectl get pods -l app=storage-test
 ```
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-3%20статус%20подов.png)
+
 ### 4 Проверка записи данных:
 ```bash
 POD_NAME=$(kubectl get pods -l app=storage-test -o jsonpath="{.items[0].metadata.name}")
 kubectl exec -it $POD_NAME -c multitool -- cat /data/output.txt
 ```
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-4%20Проверяем%20данные.png)
 
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-5%20статус.png)
+
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-6%20создание%20нового%20пода.png)
+
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-7данные%20в%20новом%20поде.png) 
 
 ### Проверка сохранности данных
 
@@ -65,21 +74,41 @@ kubectl delete -f manifests/task1/deployment.yaml
 kubectl delete -f manifests/task1/pvc.yaml
 kubectl get pv
 ```
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-8%20сохранность%20файла%20на%20ноде.png)
+
+
 ### 2 Проверка данных на ноде:
 
 ```bash
 sudo cat /mnt/data/output.txt
 ```
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/1-9%20после%20удаления%20PV.png) 
+
+
+### В результате имеем:
+
+✅ PersistentVolume успешно создан и подключен
+✅ PersistentVolumeClaim успешно привязан к PV
+✅ Pod с контейнерами busybox и multitool успешно запущен
+✅ Данные успешно записываются в общую директорию
+✅ Данные сохраняются при пересоздании пода
+✅ Данные остаются на ноде после удаления deployment и PVC
+
+### Объяснение сохранности данных
+После удаления deployment и PVC данные сохранились на ноде, потому что:
+PV был создан с параметром persistentVolumeReclaimPolicy: Retain
+Данные физически хранятся на ноде в директории /mnt/data
+Удаление PVC не влияет на физические данные при политике Retain
+Файлы остаются доступными на ноде даже после удаления всех объектов Kubernetes, так как они хранятся в локальной файловой системе ноды.
 
 ## Задание 2: Создание Deployment с NFS
 
 ### Подготовка окружения
 
-Все манифесты находятся в директории [manifests/task2](https://github.com/Byzgaev-I/7-StorageK8s-2/tree/main/manifests/task2)
-
-[nfs-deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-deployment.yaml)  
-[nfs-pvc.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-pvc.yaml)
-
+Все манифесты находятся в директории [manifests/task2](https://github.com/Byzgaev-I/7-StorageK8s-2/tree/main/manifests/task2)  
+[nfs-deployment.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-deployment.yaml)    
+[nfs-pvc.yaml](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/manifests/task2/nfs-pvc.yaml)  
+ 
 
 ### 1 Установка и настройка NFS:
 
