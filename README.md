@@ -17,7 +17,7 @@
 ```bash
 sudo mkdir /mnt/data
 sudo chmod 777 /mnt/data
-'''
+```
 Манифесты
 Все манифесты находятся в директории manifests/task1:
 
@@ -30,77 +30,81 @@ Deployment (deployment.yaml)
 
 1 Создание и проверка StorageClass и PV:
 
-'''bash
+```bash
 kubectl apply -f manifests/task1/storage-class.yaml
 kubectl apply -f manifests/task1/pv.yaml
 kubectl get sc,pv
-'''
+```
 foto
 
 2 Создание PVC и проверка:
 
-'''bash
+```bash
 kubectl apply -f manifests/task1/pvc.yaml
 kubectl get pvc
-'''
+```
 foto
 3 Запуск Deployment и проверка подов:
 
-'''bash
+```bash
 kubectl apply -f manifests/task1/deployment.yaml
 kubectl get pods -l app=storage-test
-'''
+```
 4 Проверка записи данных:
-'''bash
+```bash
 POD_NAME=$(kubectl get pods -l app=storage-test -o jsonpath="{.items[0].metadata.name}")
 kubectl exec -it $POD_NAME -c multitool -- cat /data/output.txt
-'''
+```
 
 
 Проверка сохранности данных
 
 1 Удаление Deployment и PVC:
-'''bash
+```
 kubectl delete -f manifests/task1/deployment.yaml
 kubectl delete -f manifests/task1/pvc.yaml
 kubectl get pv
-'''
+```
 2 Проверка данных на ноде:
 
-'''bash
+```bash
 sudo cat /mnt/data/output.txt
-'''
+```
 
 Задание 2: Создание Deployment с NFS
 Подготовка окружения
 
 1 Установка и настройка NFS:
 
-'''bash
+```bash
 sudo apt install -y nfs-kernel-server
 sudo mkdir -p /srv/nfs/kubedata
 sudo chown -R nobody:nogroup /srv/nfs/kubedata
 sudo chmod 777 /srv/nfs/kubedata
-'''
+```
+
 2 Настройка NFS-сервера:
-'''bash
+
+```bash
 echo "/srv/nfs/kubedata *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
 sudo exportfs -ra
-'''
+```
+
 Проверка работоспособности
 
 1 Статус NFS-сервера:
 
-'''bash 
+```bash 
 sudo systemctl status nfs-kernel-server
-'''
+```
+
 2 Проверка работы NFS:
 
-'''bash
+```bash
 kubectl exec -it $POD_NAME -- sh -c "echo 'Test NFS Storage' > /data/test.txt"
 kubectl exec -it $POD_NAME -- cat /data/test.txt
 sudo cat /srv/nfs/kubedata/test.txt
-'''
+```
 
 
 
