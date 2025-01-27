@@ -133,18 +133,43 @@ sudo exportfs -ra
 ```bash 
 sudo systemctl status nfs-kernel-server
 ```
+![image](https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/2-1.png)
 
 ### 2 Проверка работы NFS:
 
+После установки NFS:
+
 ```bash
-kubectl exec -it $POD_NAME -- sh -c "echo 'Test NFS Storage' > /data/test.txt"
+sudo systemctl status nfs-kernel-server
+```
+
+После установки NFS-provisioner:
+```bash
+kubectl get sc
+```
+После создания PVC:
+```bash
+kubectl get pvc
+```
+После создания пода:
+```bash
+kubectl get pods -l app=multitool-nfs
+```
+
+После проверки работы:
+```bash
 kubectl exec -it $POD_NAME -- cat /data/test.txt
 sudo cat /srv/nfs/kubedata/test.txt
 ```
 
+![image]((https://github.com/Byzgaev-I/7-StorageK8s-2/blob/main/2-2.png)
 
 
-
+### Результаты
+- NFS-сервер успешно настроен
+- PVC успешно создан и подключен
+- Pod с multitool успешно запущен
+- Данные успешно записываются и читаются
 
 
 
